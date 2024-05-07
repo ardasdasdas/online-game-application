@@ -1,4 +1,4 @@
-package tr.com.estu.onlinegameapplication.enums;
+package tr.com.estu.onlinegameapplication.model.enums;
 
 public enum ReviewRate {
     ZERO,

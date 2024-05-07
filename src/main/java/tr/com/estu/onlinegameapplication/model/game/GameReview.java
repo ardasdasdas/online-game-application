@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tr.com.estu.onlinegameapplication.enums.ReviewRate;
+import tr.com.estu.onlinegameapplication.model.enums.ReviewRate;
 import tr.com.estu.onlinegameapplication.model.base.BaseEntity;
 
 @Entity
@@ -16,13 +16,13 @@ public class GameReview extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name ="game_id")
-    private int gameId;
+    private Long gameId;
 
     @Column(name ="user_id")
-    private int userId;
+    private Long userId;
 
     @Column(name ="review")
     private String review;

@@ -1,0 +1,4 @@
+# Dockerfile-mysql
+FROM mysql:latest
+ENV MYSQL_DATABASE=online-game-app-db
+ENV MYSQL_ROOT_PASSWORD=password
