@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
+import tr.com.estu.onlinegameapplication.exception.ItemNotFoundException;
+import tr.com.estu.onlinegameapplication.exception.error.GenericErrorMessage;
 import tr.com.estu.onlinegameapplication.model.base.BaseAdditionalFields;
 import tr.com.estu.onlinegameapplication.model.base.BaseEntity;
 
@@ -66,7 +68,7 @@ public abstract class BaseService<E extends BaseEntity, D extends JpaRepository<
         if (entityOptional.isPresent()){
             entity = entityOptional.get();
         } else {
-            throw new NotFoundException("");
+            throw new ItemNotFoundException(GenericErrorMessage.ITEM_NOT_FOUND);
         }
 
         return entity;
