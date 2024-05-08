@@ -13,11 +13,11 @@ import java.util.Date;
 @Setter
 @Embeddable
 public class BaseAdditionalFields {
-    @Column(name = "CREATE_DATE", updatable = false)
+    @Column(name = "create_date", updatable = false)
     @CreatedDate
     private Date createDate;
 
-    @Column(name = "UPDATE_DATE")
+    @Column(name = "update_date")
     @LastModifiedDate
     private Date updateDate;
 }
