@@ -13,6 +13,8 @@ import tr.com.estu.onlinegameapplication.model.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+@EnableKafka
+@Configuration
 public class ProducerConfig {
     private static final String KAFKA_SERVER = "localhost:9092";
 

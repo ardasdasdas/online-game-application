@@ -13,9 +13,11 @@ import tr.com.estu.onlinegameapplication.model.Log;
 import java.util.HashMap;
 import java.util.Map;
 
+@EnableKafka
+@Configuration
 public class ConsumerConfig {
 
-    private static final String KAFKA_SERVER = "192.168.1.9:9092";
+    private static final String KAFKA_SERVER = "localhost:9092";
 
     private static final String GROUP_ID = "log-group";
 
