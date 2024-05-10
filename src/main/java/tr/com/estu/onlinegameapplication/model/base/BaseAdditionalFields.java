@@ -7,12 +7,13 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
 @Setter
 @Embeddable
-public class BaseAdditionalFields {
+public class BaseAdditionalFields implements Serializable {
     @Column(name = "create_date", updatable = false)
     @CreatedDate
     private Date createDate;
