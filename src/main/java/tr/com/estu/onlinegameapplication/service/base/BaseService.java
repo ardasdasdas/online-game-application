@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+import tr.com.estu.onlinegameapplication.dto.base.BaseDTO;
 import tr.com.estu.onlinegameapplication.exception.ItemNotFoundException;
 import tr.com.estu.onlinegameapplication.exception.error.GenericErrorMessage;
+import tr.com.estu.onlinegameapplication.mapper.Mapper;
 import tr.com.estu.onlinegameapplication.model.base.BaseAdditionalFields;
 import tr.com.estu.onlinegameapplication.model.base.BaseEntity;
 
@@ -18,29 +19,31 @@ import static java.util.Objects.isNull;
 
 @Service
 @RequiredArgsConstructor
-public abstract class BaseService<E extends BaseEntity, D extends JpaRepository<E, Long>> {
+public abstract class BaseService<E extends BaseEntity, A extends BaseDTO, D extends JpaRepository<E, Long>> {
     private static final Integer DEFAULT_PAGE = 0;
     private static final Integer DEFAULT_SIZE = 10;
 
     private final D dao;
+    private final Class<A> dtoClass;
+    private final Class<E> persistantClass;
 
-    public List<E> findAll(){
-        return dao.findAll();
-    }
-
-    public Optional<E> findById(Long id){
+    protected Optional<E> findById(Long id){
         return dao.findById(id);
     }
 
-    public E save(E entity){
+    public List<A> findAll(){
+        return Mapper.mapList(dao.findAll(), dtoClass);
+    }
 
+    public A save(A dto){
+        E entity = Mapper.map(dto, persistantClass);
         setAdditionalFields(entity);
         entity = dao.save(entity);
 
-        return entity;
+        return Mapper.map(entity, dtoClass);
     }
 
-    private void setAdditionalFields(E entity) {
+    public void setAdditionalFields(E entity) {
 
         BaseAdditionalFields baseAdditionalFields = entity.getBaseAdditionalFields();
 
@@ -49,18 +52,18 @@ public abstract class BaseService<E extends BaseEntity, D extends JpaRepository<
             entity.setBaseAdditionalFields(baseAdditionalFields);
         }
 
-        if (entity.getId() == null){
+        if (isNull(entity.getId())){
             baseAdditionalFields.setCreateDate(new Date());
         }
 
         baseAdditionalFields.setUpdateDate(new Date());
     }
 
-    public void delete(E entity){
-        dao.delete(entity);
+    public void deleteById(Long id){
+        dao.deleteById(id);
     }
 
-    public E getByIdWithControl(Long id) {
+    public A findByIdWithControl(Long id) {
 
         Optional<E> entityOptional = findById(id);
 
@@ -71,22 +74,21 @@ public abstract class BaseService<E extends BaseEntity, D extends JpaRepository<
             throw new ItemNotFoundException(GenericErrorMessage.ITEM_NOT_FOUND);
         }
 
-        return entity;
+        return Mapper.map(entity, dtoClass);
     }
 
     public boolean existsById(Long id){
         return dao.existsById(id);
     }
 
-    protected PageRequest getPageRequest(Optional<Integer> pageOptional, Optional<Integer> sizeOptional) {
+    public PageRequest getPageRequest(Optional<Integer> pageOptional, Optional<Integer> sizeOptional) {
         Integer page = getPage(pageOptional);
         Integer size = getSize(sizeOptional);
 
-        PageRequest pageRequest = PageRequest.of(page, size);
-        return pageRequest;
+        return PageRequest.of(page, size);
     }
 
-    protected Integer getSize(Optional<Integer> sizeOptional) {
+    public Integer getSize(Optional<Integer> sizeOptional) {
 
         Integer size = DEFAULT_SIZE;
         if (sizeOptional.isPresent()){
@@ -95,7 +97,7 @@ public abstract class BaseService<E extends BaseEntity, D extends JpaRepository<
         return size;
     }
 
-    protected Integer getPage(Optional<Integer> pageOptional) {
+    public Integer getPage(Optional<Integer> pageOptional) {
 
         Integer page = DEFAULT_PAGE;
         if (pageOptional.isPresent()){
