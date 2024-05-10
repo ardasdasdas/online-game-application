@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import tr.com.estu.onlinegameapplication.dto.LogDTO;
 import tr.com.estu.onlinegameapplication.dto.base.RestResponse;
 import tr.com.estu.onlinegameapplication.exception.error.ExceptionResponse;
+import tr.com.estu.onlinegameapplication.kafka.LogProducer;
 import tr.com.estu.onlinegameapplication.mapper.Mapper;
 import tr.com.estu.onlinegameapplication.model.Log;
 import tr.com.estu.onlinegameapplication.model.base.BaseAdditionalFields;
@@ -22,7 +23,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private final LogService logService;
+    private final LogProducer logProducer;
 
     @ExceptionHandler(OnlineGameApplicationException.class)
     public ResponseEntity<Object> handleException(OnlineGameApplicationException ex) {
@@ -43,6 +44,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         log.setMessage(exceptionResponse.getMessage());
         log.setBaseAdditionalFields(new BaseAdditionalFields());
 
-        logService.log(Mapper.map(log, LogDTO.class));
+        logProducer.sendLog(Mapper.map(log, LogDTO.class));
     }
 }

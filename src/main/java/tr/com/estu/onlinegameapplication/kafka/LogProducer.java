@@ -17,9 +17,9 @@ public class LogProducer {
 
     private static final String TOPIC = "log-topic";
 
-    public void sendLog(LogDTO log) {
+    public void sendLog(LogDTO logDTO) {
         String id = UUID.randomUUID().toString();
-
-        kafkaTemplate.send(TOPIC, id, log);
+        System.out.println("Sending log message with Kafka");
+        kafkaTemplate.send(TOPIC, id, logDTO);
     }
 }

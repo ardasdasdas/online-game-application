@@ -2,8 +2,11 @@ package tr.com.estu.onlinegameapplication.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tr.com.estu.onlinegameapplication.dto.LogDTO;
 import tr.com.estu.onlinegameapplication.dto.UserDTO;
+import tr.com.estu.onlinegameapplication.kafka.LogProducer;
 import tr.com.estu.onlinegameapplication.model.User;
+import tr.com.estu.onlinegameapplication.service.LogService;
 import tr.com.estu.onlinegameapplication.service.UserService;
 
 import java.util.List;
@@ -19,6 +22,7 @@ public class UserController {
 
     // UserService instance for performing operations on User entities
     private final UserService userService;
+    private final LogProducer logService;
 
     /**
      * Handles GET requests to "/users".
@@ -26,6 +30,9 @@ public class UserController {
      */
     @GetMapping
     public List<UserDTO> getAllUsers() {
+        LogDTO logDTO = new LogDTO();
+        logDTO.setMessage("call getAllUsers");
+        logService.sendLog(logDTO);
         return userService.findAll();
     }
 

@@ -15,18 +15,8 @@ import java.util.UUID;
 @Service
 public class LogService extends BaseService<Log, LogDTO, LogRepository> {
 
-    private static final String TOPIC = "log-topic";
-
-    @Autowired
-    private KafkaTemplate<String, LogDTO> kafkaTemplate;
-
     public LogService(LogRepository dao) {
         super(dao, LogDTO.class, Log.class);
     }
 
-    public void log(LogDTO logDTO) {
-        String id = UUID.randomUUID().toString();
-
-        kafkaTemplate.send(TOPIC, id, logDTO);
-    }
 }
