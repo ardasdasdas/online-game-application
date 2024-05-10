@@ -8,7 +8,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
-import tr.com.estu.onlinegameapplication.model.Log;
+import tr.com.estu.onlinegameapplication.dto.LogDTO;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,12 +19,12 @@ public class ProducerConfig {
     private static final String KAFKA_SERVER = "localhost:9092";
 
     @Bean
-    public KafkaTemplate<String, Log> kafkaTemplate(){
+    public KafkaTemplate<String, LogDTO> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }
 
     @Bean
-    public ProducerFactory<String, Log> producerFactory(){
+    public ProducerFactory<String, LogDTO> producerFactory(){
 
         Map<String, Object> config = new HashMap<>();
         config.put(org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER);
