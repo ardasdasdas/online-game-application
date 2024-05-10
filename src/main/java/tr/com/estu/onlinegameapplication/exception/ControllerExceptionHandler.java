@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import tr.com.estu.onlinegameapplication.dto.LogDTO;
 import tr.com.estu.onlinegameapplication.dto.base.RestResponse;
 import tr.com.estu.onlinegameapplication.exception.error.ExceptionResponse;
+import tr.com.estu.onlinegameapplication.mapper.Mapper;
 import tr.com.estu.onlinegameapplication.model.Log;
 import tr.com.estu.onlinegameapplication.model.base.BaseAdditionalFields;
 import tr.com.estu.onlinegameapplication.service.LogService;
@@ -41,6 +43,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         log.setMessage(exceptionResponse.getMessage());
         log.setBaseAdditionalFields(new BaseAdditionalFields());
 
-        logService.log(log);
+        logService.log(Mapper.map(log, LogDTO.class));
     }
 }
