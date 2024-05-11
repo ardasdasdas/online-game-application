@@ -17,5 +17,4 @@ public class UserGameCollection {
     private String id;
     private String userId;
     private List<Long> gameIds;
-
 }
