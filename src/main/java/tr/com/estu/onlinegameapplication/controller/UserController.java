@@ -22,7 +22,6 @@ public class UserController {
 
     // UserService instance for performing operations on User entities
     private final UserService userService;
-    private final LogProducer logService;
 
     /**
      * Handles GET requests to "/users".
@@ -30,9 +29,6 @@ public class UserController {
      */
     @GetMapping
     public List<UserDTO> getAllUsers() {
-        LogDTO logDTO = new LogDTO();
-        logDTO.setMessage("call getAllUsers");
-        logService.sendLog(logDTO);
         return userService.findAll();
     }
 

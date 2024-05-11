@@ -9,7 +9,7 @@ public class Mapper {
     private static final ModelMapper modelMapper = new ModelMapper();
 
     static {
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STANDARD);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
     }
 
     public static <S, D> D map(S source, Class<D> destinationType) {

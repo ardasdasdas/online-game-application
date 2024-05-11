@@ -7,10 +7,12 @@ import tr.com.estu.onlinegameapplication.model.enums.ReviewRate;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class GameReviewDTO implements BaseDTO {
     private Long gameId;
     private Long userId;
     private String review;
     private ReviewRate reviewRate;
-    private transient BaseAdditionalFieldsDTO baseAdditionalFields;
+    private BaseAdditionalFieldsDTO baseAdditionalFields;
 }
