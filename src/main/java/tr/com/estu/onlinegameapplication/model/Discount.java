@@ -26,6 +26,12 @@ public class Discount extends BaseEntity {
     @Column(name = "amount")
     private double amount;
 
+    @Column(name = "purchase_id")
+    private Long purchaseId;
+
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(name = "expiration_date")
     @Temporal(TemporalType.DATE)
     private Date expirationDate;

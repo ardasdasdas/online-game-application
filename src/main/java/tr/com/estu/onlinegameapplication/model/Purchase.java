@@ -24,6 +24,9 @@ public class Purchase extends BaseEntity {
     @Column(name = "game_id")
     private Long gameId;
 
+    @Column(name = "discount_id")
+    private Long purchaseId;
+
     @Column(name = "amount")
     private double amount;
 }

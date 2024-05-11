@@ -12,5 +12,7 @@ public class DiscountDTO implements BaseDTO {
     private String code;
     private double amount;
     private Date expirationDate;
+    private Long userId;
+    private Long purchaseId;
     private transient BaseAdditionalFieldsDTO baseAdditionalFields;
 }

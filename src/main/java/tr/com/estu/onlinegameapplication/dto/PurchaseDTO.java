@@ -9,6 +9,7 @@ import tr.com.estu.onlinegameapplication.dto.base.BaseDTO;
 public class PurchaseDTO implements BaseDTO {
     private Long userId;
     private Long gameId;
+    private Long discountId;
     private double amount;
     private transient BaseAdditionalFieldsDTO baseAdditionalFields;
 }
