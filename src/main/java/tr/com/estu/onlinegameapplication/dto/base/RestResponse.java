@@ -8,9 +8,9 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RestResponse<T extends Serializable> implements Serializable {
+public class RestResponse<T> implements Serializable {
 
-    private T data;
+    private transient T data;
     private Date responseDate;
     private boolean isSuccess;
     private String messages;
@@ -21,15 +21,15 @@ public class RestResponse<T extends Serializable> implements Serializable {
         responseDate = new Date();
     }
 
-    public static <T extends Serializable> RestResponse<T> of(T t){
+    public static <T> RestResponse<T> of(T t){
         return new RestResponse<>(t, true);
     }
 
-    public static <T extends Serializable> RestResponse<T> error(T t){
+    public static <T> RestResponse<T> error(T t){
         return new RestResponse<>(t, false);
     }
 
-    public static <T extends Serializable> RestResponse<T> empty(){
+    public static <T> RestResponse<T> empty(){
         return new RestResponse<>(null, true);
     }
 

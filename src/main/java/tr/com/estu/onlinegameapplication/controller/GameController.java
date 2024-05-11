@@ -1,7 +1,9 @@
 package tr.com.estu.onlinegameapplication.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tr.com.estu.onlinegameapplication.dto.base.RestResponse;
 import tr.com.estu.onlinegameapplication.dto.game.GameDTO;
 import tr.com.estu.onlinegameapplication.service.game.GameService;
 
@@ -15,23 +17,24 @@ public class GameController {
     private final GameService gameService;
 
     @PostMapping
-    public GameDTO createGame(@RequestBody GameDTO gameDTO) {
-        return gameService.save(gameDTO);
+    public ResponseEntity<RestResponse<GameDTO>> createGame(@RequestBody GameDTO gameDTO) {
+        return ResponseEntity.ok(RestResponse.of(gameService.save(gameDTO)));
     }
 
     @GetMapping
-    public List<GameDTO> getAllGameReviews() {
-        return gameService.findAll();
+    public ResponseEntity<RestResponse<List<GameDTO>>> getAllGameReviews() {
+        return ResponseEntity.ok(RestResponse.of(gameService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public GameDTO getGameReview(@PathVariable Long id) {
-        return gameService.findByIdWithControl(id);
+    public ResponseEntity<RestResponse<GameDTO>> getGameReview(@PathVariable Long id) {
+        return ResponseEntity.ok(RestResponse.of(gameService.findByIdWithControl(id)));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGameReview(@PathVariable Long id) {
+    public ResponseEntity<RestResponse<GameDTO>> deleteGameReview(@PathVariable Long id) {
         gameService.deleteById(id);
+        return ResponseEntity.ok(RestResponse.empty());
     }
 }
 

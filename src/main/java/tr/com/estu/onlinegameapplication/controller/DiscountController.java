@@ -1,8 +1,10 @@
 package tr.com.estu.onlinegameapplication.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tr.com.estu.onlinegameapplication.dto.DiscountDTO;
+import tr.com.estu.onlinegameapplication.dto.base.RestResponse;
 import tr.com.estu.onlinegameapplication.dto.game.GameDTO;
 import tr.com.estu.onlinegameapplication.service.DiscountService;
 
@@ -16,28 +18,31 @@ public class DiscountController {
     private final DiscountService discountService;
 
     @PostMapping
-    public DiscountDTO createDiscount(@RequestBody DiscountDTO discountDTO) {
-        return discountService.save(discountDTO);
+    public ResponseEntity<RestResponse<DiscountDTO>> createDiscount(@RequestBody DiscountDTO discountDTO) {
+        return ResponseEntity.ok(RestResponse.of(discountService.save(discountDTO)));
     }
 
     @GetMapping
-    public List<DiscountDTO> getAllDiscounts() {
-        return discountService.findAll();
+    public ResponseEntity<RestResponse<List<DiscountDTO>>> getAllDiscounts() {
+        return ResponseEntity.ok(RestResponse.of(discountService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public DiscountDTO getDiscount(@PathVariable Long id) {
-        return discountService.findByIdWithControl(id);
+    public ResponseEntity<RestResponse<DiscountDTO>> getDiscount(@PathVariable Long id) {
+        return ResponseEntity.ok(RestResponse.of(discountService.findByIdWithControl(id)));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteDiscount(@PathVariable Long id) {
+    public ResponseEntity<RestResponse<DiscountDTO>> deleteDiscount(@PathVariable Long id) {
         discountService.deleteById(id);
+        return ResponseEntity.ok(RestResponse.empty());
     }
 
     @PostMapping("/{discountCode}/apply")
-    public double applyDiscount(@PathVariable String discountCode, @RequestBody GameDTO gameDTO, @RequestBody DiscountDTO discountDTO) {
-        return discountService.applyDiscount(gameDTO, discountDTO, discountCode);
+    public ResponseEntity<RestResponse<Double>> applyDiscount(@PathVariable String discountCode,
+                                                              @RequestBody GameDTO gameDTO,
+                                                              @RequestBody DiscountDTO discountDTO) {
+        return ResponseEntity.ok(RestResponse.of(discountService.applyDiscount(gameDTO, discountDTO, discountCode)));
     }
 }
 

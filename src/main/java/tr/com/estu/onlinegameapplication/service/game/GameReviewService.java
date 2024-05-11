@@ -1,6 +1,7 @@
 package tr.com.estu.onlinegameapplication.service.game;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tr.com.estu.onlinegameapplication.dto.game.GameReviewDTO;
@@ -23,5 +24,11 @@ public class GameReviewService extends BaseService<GameReview, GameReviewDTO, Ga
     public List<GameReviewDTO> findByGameId(Long gameId) {
         List<GameReview> reviewList = getDao().findAllByGameId(gameId);
         return mapList(reviewList, GameReviewDTO.class);
+    }
+
+    @Override
+    @CacheEvict(value = "gameReviews", key = "#gameId")
+    public void deleteById(Long gameId) {
+        getDao().deleteById(gameId);
     }
 }
