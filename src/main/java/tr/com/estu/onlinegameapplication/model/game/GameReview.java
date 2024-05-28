@@ -28,6 +28,6 @@ public class GameReview extends BaseEntity {
     private String review;
 
     @Column(name ="review_rate", length = 5)
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     private ReviewRate reviewRate;
 }
