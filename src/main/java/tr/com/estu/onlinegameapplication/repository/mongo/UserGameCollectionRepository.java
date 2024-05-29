@@ -4,4 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import tr.com.estu.onlinegameapplication.model.mongo.UserGameCollection;
 
 public interface UserGameCollectionRepository extends MongoRepository<UserGameCollection, String> {
+    UserGameCollection findByUserId(String userId);
 }

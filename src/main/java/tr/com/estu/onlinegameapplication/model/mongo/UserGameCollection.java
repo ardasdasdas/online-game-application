@@ -17,7 +17,7 @@ import java.util.List;
 public class UserGameCollection {
     @Id
     private String id;
-    @Indexed(direction = IndexDirection.ASCENDING)
+    @Indexed(direction = IndexDirection.ASCENDING, unique = true)
     private String userId;
     private List<Long> gameIds;
 }

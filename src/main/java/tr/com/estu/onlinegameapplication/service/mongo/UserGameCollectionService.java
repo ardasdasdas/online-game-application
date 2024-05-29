@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Service
 @RequiredArgsConstructor
 public class UserGameCollectionService {
@@ -24,6 +26,18 @@ public class UserGameCollectionService {
     public UserGameCollectionDTO save(UserGameCollectionDTO userGameCollectionDTO) {
         return Mapper.map(userGameCollectionRepository.save(
                 Mapper.map(userGameCollectionDTO, UserGameCollection.class)), UserGameCollectionDTO.class);
+    }
+
+    public UserGameCollectionDTO save(Long userId, Long gameId) {
+        UserGameCollection userGameCollection = userGameCollectionRepository.findByUserId(userId.toString());
+
+        if(isNull(userGameCollection))
+        {
+            userGameCollection = new UserGameCollection();
+            userGameCollection.setUserId(userId.toString());
+        }
+        userGameCollection.getGameIds().add((gameId));
+        return Mapper.map(userGameCollectionRepository.save(userGameCollection), UserGameCollectionDTO.class);
     }
 
     public UserGameCollectionDTO findById(String id) {
