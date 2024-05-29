@@ -44,5 +44,11 @@ public class UserGameCollectionController {
         userGameCollectionService.deleteById(id);
         return ResponseEntity.ok(RestResponse.empty());
     }
+
+    @GetMapping("/evict-mongo")
+    public ResponseEntity<RestResponse<UserGameCollectionDTO>> evictMongo() {
+        userGameCollectionService.evictMongo();
+        return ResponseEntity.ok(RestResponse.empty());
+    }
 }
 

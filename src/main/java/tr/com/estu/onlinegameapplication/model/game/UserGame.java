@@ -1,19 +1,17 @@
-package tr.com.estu.onlinegameapplication.model;
+package tr.com.estu.onlinegameapplication.model.game;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tr.com.estu.onlinegameapplication.model.base.BaseEntity;
-
+import tr.com.estu.onlinegameapplication.model.User;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "purchase")
-public class Purchase extends BaseEntity {
-
+@Table(name = "user_game")
+public class UserGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,10 +21,4 @@ public class Purchase extends BaseEntity {
 
     @Column(name = "game_id")
     private Long gameId;
-
-    @Column(name = "discount_id")
-    private Long discountId;
-
-    @Column(name = "amount")
-    private double amount;
 }

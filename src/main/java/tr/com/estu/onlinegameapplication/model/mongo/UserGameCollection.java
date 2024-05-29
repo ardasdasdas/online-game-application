@@ -1,10 +1,11 @@
 package tr.com.estu.onlinegameapplication.model.mongo;
 
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class UserGameCollection {
     @Id
     private String id;
+    @Indexed(direction = IndexDirection.ASCENDING)
     private String userId;
     private List<Long> gameIds;
 }
