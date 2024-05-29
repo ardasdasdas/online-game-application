@@ -2,6 +2,7 @@ package tr.com.estu.onlinegameapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tr.com.estu.onlinegameapplication.dto.PurchaseDTO;
 import tr.com.estu.onlinegameapplication.dto.UserDTO;
 import tr.com.estu.onlinegameapplication.dto.game.GameDTO;
@@ -29,6 +30,7 @@ public class PurchaseService extends BaseService<Purchase, PurchaseDTO, Purchase
         this.userGameRepository = userGameRepository;
     }
 
+    @Transactional
     public void purchaseGame(PurchaseDTO purchaseDTO)
     {
         Long userId = purchaseDTO.getUserId();
@@ -41,7 +43,7 @@ public class PurchaseService extends BaseService<Purchase, PurchaseDTO, Purchase
         userGame.setGameId(gameId);
         userGame.setUserId(userId);
 
-        userGameRepository.save(userGame);
         save(purchaseDTO);
+        userGameRepository.save(userGame);
     }
 }
